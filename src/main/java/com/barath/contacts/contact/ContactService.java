@@ -28,6 +28,10 @@ public class ContactService {
 		return contactRepository.save(contact);
 	}
 	
+	public List<Contact> getContactsByUser(Long userId) {
+		return contactRepository.findContactByuser_idOrderByName(userId);
+	}
+	
 	public Contact updateContact(Contact contact, Long id) {
 		Contact existingContact = findContactById(id);
 		existingContact.setName(contact.getName());

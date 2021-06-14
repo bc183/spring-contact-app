@@ -17,4 +17,12 @@ public class CustomUserService {
 	public CustomUser saveCustomUser(CustomUser customUser) {
 		return customUserRepository.save(customUser);
 	}
+	
+	public CustomUser findUserByEmail(String email) {
+		return customUserRepository.findByEmail(email);
+	}
+	
+	public CustomUser findUserByUsername(String username) {
+		return customUserRepository.findByUsername(username);
+	}
 }

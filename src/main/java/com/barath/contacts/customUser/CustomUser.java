@@ -13,12 +13,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
-import org.hibernate.type.TrueFalseType;
-import org.springframework.data.annotation.CreatedDate;
-
 import com.barath.contacts.contact.Contact;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
@@ -36,6 +34,7 @@ public class CustomUser {
 	@Column(nullable = false, unique = true)																																																																																																																																																																																																			
 	private String email;
 	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(nullable = false)
 	private String password;
 	

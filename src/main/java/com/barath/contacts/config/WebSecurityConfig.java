@@ -1,12 +1,12 @@
 package com.barath.contacts.config;
 
 
-
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -33,18 +33,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
 	}
-
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests()
-				.antMatchers("/api/contacts/**").authenticated()
+		http.cors();
+		http.csrf().disable().authorizeRequests()
+				.antMatchers("/api/contacts/**")
+				.permitAll().antMatchers(HttpMethod.OPTIONS, "/**")
+				.authenticated()
 				.anyRequest().permitAll()
 				.and().exceptionHandling().and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 	}
-
+	
 	@Autowired
 	private DataSource dataSource;
 	

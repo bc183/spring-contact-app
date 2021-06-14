@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.barath.contacts.customUser.CustomUser;
-import com.barath.contacts.customUser.CustomUserDetailsService;
 import com.barath.contacts.customUser.CustomUserRepository;
 import com.barath.contacts.exceptions.ApiException;
 
@@ -41,6 +39,11 @@ public class ContactController {
 			throw new ApiException("Contact not found");
 		}
 		return new ResponseEntity<Contact>(contactService.findContactById(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("user/{userId}")
+	public ResponseEntity<List<Contact>> getContactByUserId(@PathVariable("userId") Long id) throws ApiException {
+		return new ResponseEntity<List<Contact>>(contactService.getContactsByUser(id), HttpStatus.OK);
 	}
 	
 	@PostMapping("{userId}")
