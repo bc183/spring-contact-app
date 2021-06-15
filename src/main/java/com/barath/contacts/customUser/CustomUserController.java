@@ -40,7 +40,7 @@ public class CustomUserController {
 	}
 	
 	@GetMapping("/{username}")
-	public ResponseEntity<CustomUser> getUserByUsername(@PathVariable("username") String username) {
+	public ResponseEntity<CustomUser> getUserByUsername(@PathVariable("username") String username) throws ApiException {
 		CustomUser user = customUserService.findUserByUsername(username);
 		//System.out.println(username);
 		if (user == null) {
@@ -51,7 +51,7 @@ public class CustomUserController {
 	}
 	
 	@PostMapping("register")
-	public ResponseEntity<CustomUser> register(@RequestBody CustomUser customUser) {
+	public ResponseEntity<CustomUser> register(@RequestBody CustomUser customUser) throws ApiException {
 		CustomUser user = customUserService.findUserByUsername(customUser.getUsername());
 		//System.out.println(user.getUsername());
 		if (user != null) {
@@ -67,7 +67,7 @@ public class CustomUserController {
 	}
 	
 	@PostMapping("login")
-	public ResponseEntity<Map<String, String>> generateToken(@RequestBody AuthRequest request) {
+	public ResponseEntity<Map<String, String>> generateToken(@RequestBody AuthRequest request) throws ApiException 	{
 		try {
 			manager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 		} catch (Exception e) {
