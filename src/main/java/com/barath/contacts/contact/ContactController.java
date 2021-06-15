@@ -33,6 +33,11 @@ public class ContactController {
 		return new ResponseEntity<List<Contact>>(contactService.getContacts(), HttpStatus.OK);
 	}
 	
+	@GetMapping("search/{query}/{userId}")
+	public ResponseEntity<List<Contact>> searchContacts(@PathVariable("query") String query, @PathVariable("userId") Long userId) {
+		return new ResponseEntity<List<Contact>>(contactService.search(query, userId), HttpStatus.OK);
+	}
+	
 	@GetMapping("{id}")
 	public ResponseEntity<Contact> getContactById(@PathVariable("id") Long id) throws ApiException {
 		if (contactService.contactExists(id) != true) {
@@ -65,14 +70,14 @@ public class ContactController {
 		
 		Contact newContact = new Contact();
 		newContact.setEmail(contact.getEmail());
-		newContact.setAddress(newContact.getAddress());
+		newContact.setAddress(contact.getAddress());
 		newContact.setName(contact.getName());
 		newContact.setPhoneNumber(contact.getPhoneNumber());
 		return new ResponseEntity<Contact>(contactService.updateContact(newContact, id), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("{id}")
-	public ResponseEntity<Boolean> deleteContact(@RequestBody Contact contact, @PathVariable("id") Long id) throws ApiException  {
+	public ResponseEntity<Boolean> deleteContact(@PathVariable("id") Long id) throws ApiException  {
 		if (contactService.contactExists(id) != true) {
 			throw new ApiException("Contact not found");
 		}

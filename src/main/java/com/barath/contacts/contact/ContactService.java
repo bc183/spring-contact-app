@@ -45,4 +45,8 @@ public class ContactService {
 		 contactRepository.deleteById(id);
 	}
 	
+	public List<Contact> search(String query, Long id) {
+		return contactRepository.findByNameOrPhoneNumberAnduser_idContaining(query, query, id);
+	}
+	
 }
